@@ -111,8 +111,8 @@ type Usuario struct {
 }
 
 type HistoriaConsulta struct {
-	Fecha            time.Time `schema:"-"`
-	Usuario          int64     `schema:"-"`
+	Fecha            time.Time
+	Usuario          int64
 	MotivoConsulta   string
 	EnfermedadActual string
 	RevisionSistemas string
