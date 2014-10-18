@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<form action="/paciente_nuevo" method="post">
+  <input type="text" name="Nombres">
+  <input type="text" name="PrimerApellido">
+  <input type="text" name="SegundoApellido">
+  <input type="text" name="Genero">
+  <input type="datetime-local" name="FechaNacimiento">
+  <input type="text" name="Identificacion">
+  <input type="text" name="TipoIdentificacion">
+  <input type="text" name="Escolaridad">
+  <input type="text" name="Ocupacion">
+  <input type="text" name="EstadoCivil">
+  <input type="text" name="Direccion">
+  <input type="text" name="Barrio">
+  <input type="text" name="Municipio">
+  <input type="text" name="Departamento">
+  <input type="text" name="Pais">
+  <input type="text" name="Telefono">
+  <input type="text" name="Email">
+  <input type="submit">
+</form>
+<script>{{.}}</script>
+</body>
+</html>

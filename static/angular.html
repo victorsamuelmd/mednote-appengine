@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MedNote</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+<h1>Hello World!</h1>
+<div ng-app="mednote">
+  <div ng-controller="patients">
+    <button ng-click="add()">Add</button>
+    <button ng-click="list()">list</button>
+    <div ng-repeat="patient in data">
+      {{patient.Nombres}} <a href="/paciente/{{patient.Identificacion}}">Historia</a>
+    </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.2.26/angular-resource.min.js"></script>
+<script>
+var medNote = angular.module('mednote', ["ngResource"]);
+
+medNote.controller('patients', ["$scope", "$resource", "$http", function($scope, $resource, $http){
+    var Patient = $resource("/paciente/:id", {id:'@id'}, {});
+    $scope.add = function(){
+      var newPatient = new Patient();
+      newPatient.Nombres = "Victor Samuel";
+      newPatient.PrimerApellido = "Mosquera";
+      newPatient.Identificacion = 1087998004;
+      newPatient.$save();
+    }
+    $scope.list = function(){Patient.query(function(data){$scope.data = data})}
+    }]);
+</script>
+</body>
+</html>
