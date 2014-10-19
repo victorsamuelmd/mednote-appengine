@@ -18,7 +18,8 @@ func init() {
 	r.HandleFunc("/paciente", getPatientsList).Methods("GET")
 	r.HandleFunc("/paciente", createPatient).Methods("POST")
 	r.HandleFunc("/paciente/{id}", getPatient).Methods("GET")
-	r.HandleFunc("/paciente/{id}", nil).Methods("POST")
+	r.HandleFunc("/paciente/{id}", updatePatient).Methods("POST")
+	r.HandleFunc("/paciente/{id}", deletePatient).Methods("DELETE")
 	http.Handle("/", r)
 }
 
@@ -69,15 +70,70 @@ func createPatient(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	var u Usuario
 	err = json.Unmarshal(data, &u)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	c := appengine.NewContext(r)
 	key := datastore.NewKey(c, "Paciente", "", u.Identificacion, nil)
+
+	var usr Usuario
+	err = datastore.Get(c, key, &usr)
+	if usr.Identificacion != 0 {
+		http.Error(w, "Paciente ya existe", http.StatusBadRequest)
+		return
+	}
+
 	_, err = datastore.Put(c, key, &u)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func updatePatient(w http.ResponseWriter, r *http.Request) {
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	var u Usuario
+	var usr Usuario
+	err = json.Unmarshal(data, &u)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	c := appengine.NewContext(r)
+	key := datastore.NewKey(c, "Paciente", "", u.Identificacion, nil)
+
+	/* Compruebo que el paciente si exista, se supone que esta función actualiza pero
+	no crea nuevos pacientes, normalmente sin la comprobación, se crearía un nuevo paciente */
+	err = datastore.Get(c, key, &usr)
+	if err != nil {
+		http.Error(w, "Intento de actualizar un paciente que no existe", http.StatusBadRequest)
+		return
+	}
+
+	_, err = datastore.Put(c, key, &u)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+func deletePatient(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	c := appengine.NewContext(r)
+	key := datastore.NewKey(c, "Paciente", "", id, nil)
+	err = datastore.Delete(c, key)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
