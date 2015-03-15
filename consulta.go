@@ -14,7 +14,7 @@ type HistoriaConsulta struct {
 	Fecha            time.Time `json:"fecha,omitempty"`
 	Usuario          int64     `json:"usuario"`
 	MotivoConsulta   string    `json:"motivo_consulta"`
-	EnfermedadActual string    `json:"efermedad_actual"`
+	EnfermedadActual string    `json:"enfermedad_actual"`
 	RevisionSistemas string    `json:"revision_sistemas"`
 	ExamenFisico     string    `json:"examen_fisico"`
 	Analisis         string    `json:"analisis"`

@@ -11,54 +11,19 @@
 <body>
 
 <div ng-app="mednote">
-    <div ng-controller="patients as patient">
-        <button ng-click="patient.create()">Add</button>
-        <button ng-click="patient.del()">delete</button>
-        <button ng-click="patient.get()">get</button>
-        <button ng-click="patient.update()">update</button>
-        <div>
-            <form>
-                <input type="text" ng-model="patient.data.Nombres" placeholder="Nombres">
-                <input type="text" ng-model="patient.data.PrimerApellido" placeholder="Primer Apellido">
-                <input type="text" ng-model="patient.data.SegundoApellido" placeholder="Segundo Apellido">
-                <input type="number" ng-model="patient.data.Identificacion" placeholder="Indentificacion">
-                <input type="text" ng-model="patient.data.TipoIdentificacion" placeholder="Tipo">
-                <input type="datetime" ng-model="patient.data.FechaNacimiento" placeholder="Fecha Nacimiento">
-                <input type="text" ng-model="patient.data.Genero" placeholder="Genero">
-                <input type="text" ng-model="patient.data.Escolaridad" placeholder="Escolaridad">
-                <input type="text" ng-model="patient.data.Ocupacion" placeholder="Ocupacion">
-                <input type="text" ng-model="patient.data.EstadoCivil" placeholder="Estado Civil">
-                <input type="text" ng-model="patient.data.Direccion" placeholder="Direccion">
-                <input type="text" ng-model="patient.data.Barrio" placeholder="Barrio">
-                <input type="text" ng-model="patient.data.Municipio" placeholder="Municipio">
-                <input type="text" ng-model="patient.data.Departamento" placeholder="Departamento">
-                <input type="text" ng-model="patient.data.Pais" placeholder="Pais">
-                <input type="text" ng-model="patient.data.Telefono" placeholder="Telefono">
-                <input type="email" ng-model="patient.data.Email" placeholder="Email">
-            </form>
-        </div>
-    </div>
-
-    <div ng-controller="consultaController as c">
-        {{ c.patient.Identificacion }}
-        <button ng-click="c.create()">Create</button>
-        <form>
-            <input type="number" ng-model="c.data.id">
-            <input type="text" ng-model="c.data.fecha">
-            <input type="text" ng-model="c.data.usuario">
-            <input type="text" ng-model="c.data.motivo_consulta">
-            <input type="text" ng-model="c.data.enfermedad_actual">
-            <input type="text" ng-model="c.data.revision_sistemas">
-            <input type="text" ng-model="c.data.examen_fisico">
-            <input type="text" ng-model="c.data.analisis">
-            <input type="text" ng-model="c.data.conducta">
-            <input type="number" ng-model="c.data.id_medico">
-        </form>
-    </div>
+    <div ui-view></div>
+    <div ui-view="some"></div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
-<script src="https://code.angularjs.org/1.3.14/angular-resource.min.js"></script>
 <script src="/static/app.js"></script>
+<script src="/static/js/angular-ui-router.min.js"></script>
+<script src="/static/consultations/module.js"></script>
+<script src="/static/consultations/controller.js"></script>
+<script src="/static/patients/module.js"></script>
+<script src="/static/patients/service.js"></script>
+<script src="/static/patients/controller.js"></script>
+<script src="https://code.angularjs.org/1.3.14/angular-resource.min.js"></script>
+
 </body>
 </html>

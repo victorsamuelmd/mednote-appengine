@@ -1,0 +1,14 @@
+    {{ c.patient.Identificacion }}
+    <button ng-click="c.create()">Create</button>
+    <form>
+        <input type="number" ng-model="c.data.id">
+        <input type="text" ng-model="c.data.fecha">
+        <input type="text" ng-model="c.data.usuario">
+        <textarea ng-model="c.data.motivo_consulta"></textarea>
+        <textarea ng-model="c.data.enfermedad_actual"></textarea>
+        <textarea ng-model="c.data.revision_sistemas"></textarea>
+        <textarea ng-model="c.data.examen_fisico"></textarea>
+        <textarea ng-model="c.data.analisis"></textarea>
+        <textarea ng-model="c.data.conducta"></textarea>
+        <input type="number" ng-model="c.data.id_medico">
+    </form>
