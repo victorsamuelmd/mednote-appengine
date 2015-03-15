@@ -2,85 +2,63 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>MedNote</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+<meta charset="UTF-8">
+<title>MedNote</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="/static/css/styles.css"/>
 </head>
 
 <body>
 
-<h1>Hello World!</h1>
 <div ng-app="mednote">
-  <div ng-controller="patients">
-    <button ng-click="createPatient()">Add</button>
-    <button ng-click="list()">list</button>
-    <button ng-click="del()">delete</button>
-    <button ng-click="get()">get</button>
-    <button ng-click="update()">update</button>
-    <div ng-repeat="patient in data">
-      {{patient.Nombres}} <a href="/paciente/{{patient.Identificacion}}">Historia</a>
+    <div ng-controller="patients as patient">
+        <button ng-click="patient.create()">Add</button>
+        <button ng-click="patient.del()">delete</button>
+        <button ng-click="patient.get()">get</button>
+        <button ng-click="patient.update()">update</button>
+        <div>
+            <form>
+                <input type="text" ng-model="patient.data.Nombres" placeholder="Nombres">
+                <input type="text" ng-model="patient.data.PrimerApellido" placeholder="Primer Apellido">
+                <input type="text" ng-model="patient.data.SegundoApellido" placeholder="Segundo Apellido">
+                <input type="number" ng-model="patient.data.Identificacion" placeholder="Indentificacion">
+                <input type="text" ng-model="patient.data.TipoIdentificacion" placeholder="Tipo">
+                <input type="datetime" ng-model="patient.data.FechaNacimiento" placeholder="Fecha Nacimiento">
+                <input type="text" ng-model="patient.data.Genero" placeholder="Genero">
+                <input type="text" ng-model="patient.data.Escolaridad" placeholder="Escolaridad">
+                <input type="text" ng-model="patient.data.Ocupacion" placeholder="Ocupacion">
+                <input type="text" ng-model="patient.data.EstadoCivil" placeholder="Estado Civil">
+                <input type="text" ng-model="patient.data.Direccion" placeholder="Direccion">
+                <input type="text" ng-model="patient.data.Barrio" placeholder="Barrio">
+                <input type="text" ng-model="patient.data.Municipio" placeholder="Municipio">
+                <input type="text" ng-model="patient.data.Departamento" placeholder="Departamento">
+                <input type="text" ng-model="patient.data.Pais" placeholder="Pais">
+                <input type="text" ng-model="patient.data.Telefono" placeholder="Telefono">
+                <input type="email" ng-model="patient.data.Email" placeholder="Email">
+            </form>
+        </div>
     </div>
-    <div>
-      <form action="">
-        <input type="text" ng-model="patient.Nombres" placeholder="Nombres">
-        <input type="text" ng-model="patient.PrimerApellido" placeholder="Primer Apellido">
-        <input type="text" ng-model="patient.SegundoApellido" placeholder="Segundo Apellido">
-        <input type="number" ng-model="patient.Identificacion" placeholder="Indentificacion">
-        <input type="text" ng-model="patient.TipoIdentificacion" placeholder="Tipo">
-        <input type="datetime" ng-model="patient.FechaNacimiento" placeholder="Fecha Nacimiento">
-        <input type="text" ng-model="patient.Genero" placeholder="Genero">
-        <input type="text" ng-model="patient.Escolaridad" placeholder="Escolaridad">
-        <input type="text" ng-model="patient.Ocupacion" placeholder="Ocupacion">
-        <input type="text" ng-model="patient.EstadoCivil" placeholder="Estado Civil">
-        <input type="text" ng-model="patient.Direccion" placeholder="Direccion">
-        <input type="text" ng-model="patient.Barrio" placeholder="Barrio">
-        <input type="text" ng-model="patient.Municipio" placeholder="Municipio">
-        <input type="text" ng-model="patient.Departamento" placeholder="Departamento">
-        <input type="text" ng-model="patient.Pais" placeholder="Pais">
-        <input type="number" ng-model="patient.Telefono" placeholder="Telefono">
-        <input type="email" ng-model="patient.Email" placeholder="Email">
-      </form>
+
+    <div ng-controller="consultaController as c">
+        {{ c.patient.Identificacion }}
+        <button ng-click="c.create()">Create</button>
+        <form>
+            <input type="number" ng-model="c.data.id">
+            <input type="text" ng-model="c.data.fecha">
+            <input type="text" ng-model="c.data.usuario">
+            <input type="text" ng-model="c.data.motivo_consulta">
+            <input type="text" ng-model="c.data.enfermedad_actual">
+            <input type="text" ng-model="c.data.revision_sistemas">
+            <input type="text" ng-model="c.data.examen_fisico">
+            <input type="text" ng-model="c.data.analisis">
+            <input type="text" ng-model="c.data.conducta">
+            <input type="number" ng-model="c.data.id_medico">
+        </form>
     </div>
-  </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-<script src="https://code.angularjs.org/1.2.26/angular-resource.min.js"></script>
-<script>
-var medNote = angular.module('mednote', ["ngResource"]);
-
-medNote.controller('patients', ["$scope", "$resource", "$http", function($scope, $resource, $http){
-
-    var Patient = $resource("/paciente/:id", {id:'@id'}, {});
-
-    $scope.createPatient = function(){
-      var newPatient = new Patient();
-      jQuery.extend(newPatient, $scope.patient);
-      newPatient.Telefono = [$scope.patient.Telefono];
-      newPatient.$save();
-    }
-
-    $scope.list = function(){
-      Patient.query(function(data){$scope.data = data});
-    }
-
-    $scope.del = function(){
-      Patient.delete({id: $scope.patient.Identificacion});
-    }
-    $scope.get = function(){
-      Patient.get({id: $scope.patient.Identificacion},
-        function (data){$scope.patient = data} 
-        );
-    }
-    $scope.update = function(){
-      Patient.get({id: $scope.patient.Identificacion}, function(patient){
-        patient = $scope.patient
-        patient.$save({id: $scope.patient.Identificacion}); 
-      });
-    }
-
-}]);
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.3.14/angular-resource.min.js"></script>
+<script src="/static/app.js"></script>
 </body>
 </html>

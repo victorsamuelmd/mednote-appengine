@@ -10,9 +10,7 @@ handlers:
 - url: /
   static_files: static/angular.html
   upload: static/angular.html
-  login: required
 
 - url: /.*
   script: _go_app
-  login: required
 

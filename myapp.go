@@ -2,7 +2,6 @@ package hello
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -20,6 +19,7 @@ func init() {
 	r.HandleFunc("/paciente/{id}", getPatient).Methods("GET")
 	r.HandleFunc("/paciente/{id}", updatePatient).Methods("POST")
 	r.HandleFunc("/paciente/{id}", deletePatient).Methods("DELETE")
+	r.HandleFunc("/consulta", createHistoriaConsulta).Methods("POST")
 	http.Handle("/", r)
 }
 
@@ -36,11 +36,10 @@ func getPatientsList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	/* Convierto la lista de usuarios en un objeto de tipo json */
-	if j, err := json.Marshal(patients); err != nil {
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(patients); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-	} else {
-		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.Write(j)
+		return
 	}
 
 }
@@ -54,7 +53,7 @@ func getPatient(w http.ResponseWriter, r *http.Request) {
 
 	var u Usuario
 	if err := datastore.Get(c, key, &u); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
@@ -67,44 +66,35 @@ func getPatient(w http.ResponseWriter, r *http.Request) {
 }
 
 func createPatient(w http.ResponseWriter, r *http.Request) {
-	data, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 	var u Usuario
-	err = json.Unmarshal(data, &u)
-	if err != nil {
+
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	c := appengine.NewContext(r)
 	key := datastore.NewKey(c, "Paciente", "", u.Identificacion, nil)
 
 	var usr Usuario
-	err = datastore.Get(c, key, &usr)
-	if usr.Identificacion != 0 {
+	if err := datastore.Get(c, key, &usr); err == nil {
 		http.Error(w, "Paciente ya existe", http.StatusBadRequest)
 		return
 	}
 
-	_, err = datastore.Put(c, key, &u)
+	_, err := datastore.Put(c, key, &u)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
 func updatePatient(w http.ResponseWriter, r *http.Request) {
-	data, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
 
 	var u Usuario
 	var usr Usuario
-	err = json.Unmarshal(data, &u)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	c := appengine.NewContext(r)
@@ -112,16 +102,18 @@ func updatePatient(w http.ResponseWriter, r *http.Request) {
 
 	/* Compruebo que el paciente si exista, se supone que esta función actualiza pero
 	no crea nuevos pacientes, normalmente sin la comprobación, se crearía un nuevo paciente */
-	err = datastore.Get(c, key, &usr)
-	if err != nil {
+	if err := datastore.Get(c, key, &usr); err != nil {
 		http.Error(w, "Intento de actualizar un paciente que no existe", http.StatusBadRequest)
 		return
 	}
 
-	_, err = datastore.Put(c, key, &u)
-	if err != nil {
+	if _, err := datastore.Put(c, key, &u); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(u)
 
 }
 
@@ -162,20 +154,8 @@ type Usuario struct {
 
 	// Contacto
 
-	Telefono []int
+	Telefono string
 	Email    string
-}
-
-type HistoriaConsulta struct {
-	Fecha            time.Time
-	Usuario          int64
-	MotivoConsulta   string
-	EnfermedadActual string
-	RevisionSistemas string
-	ExamenFisico     string
-	Analisis         string
-	Conducta         string
-	Medico           string
 }
 
 type Antecedente struct {
