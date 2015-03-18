@@ -1,0 +1,38 @@
+{
+  "name": "mednote",
+  "version": "0.0.0",
+  "homepage": "https://github.com/victorsamuelmd/mednote-appengine",
+  "authors": [
+    "victorsamuelmd <victorsamuelmd@gmail.com>"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "yui"
+  ],
+  "keywords": [
+    "historia",
+    "clínica"
+  ],
+  "license": "GNU",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.14",
+    "angular-ui-router": "~0.2.13",
+    "angular-resource": "~1.3.14"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-uglify": "~0.8.0",
+    "karma": "~0.4.6",
+    "jasmine": "~2.2.1",
+    "angular-mocks": "~1.3.14"
+  }
+}

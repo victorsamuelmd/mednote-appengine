@@ -8,8 +8,8 @@ handlers:
   static_dir: static
 
 - url: /
-  static_files: static/angular.html
-  upload: static/angular.html
+  static_files: static/index.html
+  upload: static/index.html
 
 - url: /.*
   script: _go_app

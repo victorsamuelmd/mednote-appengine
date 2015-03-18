@@ -13,7 +13,7 @@
             .state('patient', {
                     url: '/patient/create',
                     templateUrl: '/static/patients/form.html',
-                    controller: 'PatientsController as patient',
+                    controller: 'PatientsController as vm',
                 }
             );
 

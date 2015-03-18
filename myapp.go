@@ -17,7 +17,7 @@ func init() {
 	r.HandleFunc("/paciente", getPatientsList).Methods("GET")
 	r.HandleFunc("/paciente", createPatient).Methods("POST")
 	r.HandleFunc("/paciente/{id}", getPatient).Methods("GET")
-	r.HandleFunc("/paciente/{id}", updatePatient).Methods("POST")
+	r.HandleFunc("/paciente/{id}", updatePatient).Methods("PUT")
 	r.HandleFunc("/paciente/{id}", deletePatient).Methods("DELETE")
 	r.HandleFunc("/consulta", createHistoriaConsulta).Methods("POST")
 	http.Handle("/", r)
@@ -69,16 +69,15 @@ func createPatient(w http.ResponseWriter, r *http.Request) {
 	var u Usuario
 
 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	c := appengine.NewContext(r)
 	key := datastore.NewKey(c, "Paciente", "", u.Identificacion, nil)
 
-	var usr Usuario
-	if err := datastore.Get(c, key, &usr); err == nil {
-		http.Error(w, "Paciente ya existe", http.StatusBadRequest)
+	if err := datastore.Get(c, key, &u); err == nil {
+		http.Error(w, "Paciente ya existe", http.StatusConflict)
 		return
 	}
 
@@ -86,6 +85,8 @@ func createPatient(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+
+	w.WriteHeader(http.StatusCreated)
 }
 
 func updatePatient(w http.ResponseWriter, r *http.Request) {

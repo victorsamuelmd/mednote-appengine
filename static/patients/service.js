@@ -3,43 +3,41 @@
     "use strict";
 
     angular.module('patients')
-        .service('patientsService', patientsService);
+        .service('patient', patient);
 
-    patientsService.$inject = ['$resource'];
+    patient.$inject = ['$resource'];
 
-    function patientsService($resource) {
+    function patient($resource) {
         var sm = this;
-        this.patient = {};
+        sm.data = {};
 
-        var Patient = $resource("/paciente/:id", {id:'@id'}, {});
+        var Patient = $resource("/paciente/:id", null, {'update': {method: 'PUT'}});
 
-        this.create = create;
-        this.del = del;
-        this.get = get;
-        this.update = update;
+        sm.create = create;
+        sm.del = del;
+        sm.get = get;
+        sm.update = update;
 
         function create (data) {
             var np = new Patient();
-            angular.extend(np, data);
+            angular.copy(data, np);
             np.$save();
         }
 
         function del (data) {
             Patient.delete({id: data.Identificacion});
+            angular.copy({}, data);
         }
 
 
         function get (data) {
-            Patient.get({id: data.Identificacion}, function(d){
-                sm.patient = d;
+            Patient.get({id: data.Identificacion}, function(data){
+                sm.data = angular.copy(data, sm.data);
             });
         }
 
-        function update () {
-            Patient.get({id: vm.data.Identificacion}, function(data){
-                var patient = vm.data;
-                patient.$save({id: vm.data.Identificacion});
-            });
+        function update (data) {
+            Patient.update({id: data.Identificacion}, data);
         }
 
     }

@@ -4,21 +4,35 @@
     angular.module('patients')
         .controller('PatientsController', PatientsController);
 
-    PatientsController.$inject = (["patientsService", '$scope']);
+    PatientsController.$inject = (["patient", '$scope']);
 
-    function PatientsController (patientsService, $scope) {
+    function PatientsController (patient, $scope) {
 
         var vm = this;
 
-        vm.get = function get(){
-            patientsService.get(vm.data);
+        vm.data = {};
+        vm.create = create;
+        vm.del = del;
+        vm.get = get;
+        vm.update = update;
+        
+        function get(){
+            patient.get(vm.data);
+        }
+        
+        function create(){
+            patient.create(vm.data);
         }
 
-        vm.create = function create(){
-            patientsService.create(vm.data);
+        function del() {
+            patient.del(vm.data);
         }
 
-        $scope.$watchCollection(function(){return patientsService.patient}, function (newv, old) {
+        function update() {
+            patient.update(vm.data);
+        }
+
+        $scope.$watchCollection(function(){return patient.data}, function (newv, old) {
             vm.data = newv;
         });
     }

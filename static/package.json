@@ -1,0 +1,32 @@
+{
+  "name": "mednote",
+  "version": "1.0.0",
+  "description": "Aplicación para el manejo de historias clínicas.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/victorsamuelmd/mednote-appengine"
+  },
+  "keywords": [
+    "historias",
+    "clínicas"
+  ],
+  "author": "victorsamuelmd",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/victorsamuelmd/mednote-appengine/issues"
+  },
+  "homepage": "https://github.com/victorsamuelmd/mednote-appengine",
+  "devDependencies": {
+    "jasmine-core": "^2.2.0",
+    "karma": "^0.12.31",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-opera-launcher": "^0.1.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "phantomjs": "^1.9.16"
+  }
+}

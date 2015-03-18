@@ -1,25 +1,135 @@
-<button ng-click="patient.create()">Add</button>
-<button ng-click="patient.del()">delete</button>
-<button ng-click="patient.get()">get</button>
-<button ng-click="patient.update()">update</button>
+<button
+    ng-click="vm.create()"
+    ng-disabled="patientForm.$invalid">
+    Add
+</button>
+
+<button 
+    ng-click="vm.del()">
+    delete
+</button>
+
+<button 
+    ng-click="vm.get()">
+    get
+</button>
+
+<button 
+    ng-click="vm.update()">
+    update
+</button>
+
+<a href="#/consultation">Consulta</a>
+
 <div>
-    <form>
-        <input type="text" ng-model="patient.data.Nombres" placeholder="Nombres">
-        <input type="text" ng-model="patient.data.PrimerApellido" placeholder="Primer Apellido">
-        <input type="text" ng-model="patient.data.SegundoApellido" placeholder="Segundo Apellido">
-        <input type="number" ng-model="patient.data.Identificacion" placeholder="Indentificacion">
-        <input type="text" ng-model="patient.data.TipoIdentificacion" placeholder="Tipo">
-        <input type="datetime" ng-model="patient.data.FechaNacimiento" placeholder="Fecha Nacimiento">
-        <input type="text" ng-model="patient.data.Genero" placeholder="Genero">
-        <input type="text" ng-model="patient.data.Escolaridad" placeholder="Escolaridad">
-        <input type="text" ng-model="patient.data.Ocupacion" placeholder="Ocupacion">
-        <input type="text" ng-model="patient.data.EstadoCivil" placeholder="Estado Civil">
-        <input type="text" ng-model="patient.data.Direccion" placeholder="Direccion">
-        <input type="text" ng-model="patient.data.Barrio" placeholder="Barrio">
-        <input type="text" ng-model="patient.data.Municipio" placeholder="Municipio">
-        <input type="text" ng-model="patient.data.Departamento" placeholder="Departamento">
-        <input type="text" ng-model="patient.data.Pais" placeholder="Pais">
-        <input type="text" ng-model="patient.data.Telefono" placeholder="Telefono">
-        <input type="email" ng-model="patient.data.Email" placeholder="Email">
+    <form name="patientForm">
+        <input
+            type="text"
+            ng-model="vm.data.Nombres"
+            name="Nombres"
+            ng-required="true"
+            placeholder="Nombres"/>
+
+        <input type="text"
+            ng-model="vm.data.PrimerApellido"
+            name="PrimerApellido"
+            ng-required="true"
+            ng-minlength="2"
+            ng-maxlength="20"
+            placeholder="Primer Apellido"/>
+
+        <input type="text"
+            ng-model="vm.data.SegundoApellido"
+            name="SegundoApellido"
+            ng-required="true"
+            ng-minlength="2"
+            ng-maxlength="20"
+            ng-pattern="/\w{2,20}/"
+            placeholder="Segundo Apellido"/>
+
+        <input type="number"
+            ng-model="vm.data.Identificacion"
+            name="Identificacion"
+            ng-required="true"
+            ng-minlength="6"
+            ng-maxlength="12"
+            ng-pattern="/[0-9]{6,12}/"
+            placeholder="Indentificacion"/>
+
+        <select
+            ng-model="vm.data.TipoIdentificacion"
+            name="TipoIdentificacion"
+            ng-required="true"
+            placeholder="Tipo"/>
+                <option value="">Seleccione una opción..</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="TI">Targeta de Identidad</option>
+                <option value="CE">Cédula de extranjería</option>
+        </select>
+
+        <input type="datetime"
+            ng-model="vm.data.FechaNacimiento"
+            name="FechaNacimiento"
+            ng-required="true"
+            ng-pattern="/[0-9]{4}-[0-9]{2}-[0-9]{2}/"
+            placeholder="Fecha Nacimiento"/>
+
+        <select
+            ng-model="vm.data.Genero"
+            name="Genero"
+            ng-required="true"/>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+        </select>
+
+        <input type="text"
+            ng-model="vm.data.Escolaridad"
+            name="Escolaridad"
+            placeholder="Escolaridad"/>
+
+        <input type="text"
+            ng-model="vm.data.Ocupacion"
+            name="Ocupacion"
+            placeholder="Ocupacion"/>
+
+        <input type="text"
+            ng-model="vm.data.EstadoCivil"
+            name="EstadoCivil"
+            placeholder="Estado Civil"/>
+
+        <input type="text"
+            ng-model="vm.data.Direccion"
+            name="Direccion"
+            placeholder="Direccion"/>
+
+        <input type="text"
+            ng-model="vm.data.Barrio"
+            name="Barrio"
+            placeholder="Barrio"/>
+
+        <input type="text"
+            ng-model="vm.data.Municipio"
+            name="Municipio"
+            placeholder="Municipio"/>
+
+        <input type="text"
+            ng-model="vm.data.Departamento"
+            name="Departamento"
+            placeholder="Departamento"/>
+
+        <input type="text"
+            ng-model="vm.data.Pais"
+            name="Pais"
+            placeholder="Pais"/>
+
+        <input type="text"
+            ng-model="vm.data.Telefono"
+            name="Telefono"
+            placeholder="Telefono"/>
+
+        <input type="email"
+            ng-model="vm.data.Email"
+            name="Email"
+            placeholder="Email"/>
     </form>
 </div>

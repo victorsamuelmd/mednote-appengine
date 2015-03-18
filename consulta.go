@@ -10,7 +10,7 @@ import (
 )
 
 type HistoriaConsulta struct {
-	Id               int64     `json:"id,omitempty"`
+	//Id               int64     `json:"id,omitempty"`
 	Fecha            time.Time `json:"fecha,omitempty"`
 	Usuario          int64     `json:"usuario"`
 	MotivoConsulta   string    `json:"motivo_consulta"`
@@ -31,18 +31,21 @@ func createHistoriaConsulta(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	key := datastore.NewKey(c, "Consulta", "", hc.Id, nil)
+	key := datastore.NewKey(c, "Consulta", "", 0, nil)
 
 	if err := datastore.Get(c, key, &hc); err == nil {
 		http.Error(w, "Already Exist", http.StatusConflict)
 		return
 	}
 
+	hc.Fecha = time.Now()
+
 	if _, err := datastore.Put(c, key, &hc); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(hc)
 
