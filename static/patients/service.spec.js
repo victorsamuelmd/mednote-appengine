@@ -57,9 +57,6 @@
 
 
         function TestCreatePatient() {
-            $httpBackend.when('POST', '/paciente')
-                .respond(201, {"Location": '/paciente/1087998004'});
-
             $httpBackend.expectPOST('/paciente')
                 .respond(201);
 

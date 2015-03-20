@@ -7,6 +7,17 @@
 
     patient.$inject = ['$resource'];
 
+    /*
+     * Provee comunicación con el servidor para crear, obtener, actualizar
+     * y borrar información sobre pacientes.
+     * Define los siquientes métodos:
+     * @method create
+     * @method del
+     * @method update
+     * @method get
+     * Exporta un objeto que contiene la información del paciente:
+     * @member data
+     */
     function patient($resource) {
         var sm = this;
         sm.data = {};
@@ -29,7 +40,6 @@
             angular.copy({}, data);
         }
 
-
         function get (data) {
             Patient.get({id: data.Identificacion}, function(data){
                 sm.data = angular.copy(data, sm.data);
@@ -39,7 +49,6 @@
         function update (data) {
             Patient.update({id: data.Identificacion}, data);
         }
-
     }
 
 })();

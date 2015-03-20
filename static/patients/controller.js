@@ -32,7 +32,7 @@
             patient.update(vm.data);
         }
 
-        $scope.$watchCollection(function(){return patient.data}, function (newv, old) {
+        $scope.$watchCollection(function(){return patient.data;}, function (newv, old) {
             vm.data = newv;
         });
     }

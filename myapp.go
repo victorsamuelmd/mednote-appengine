@@ -1,3 +1,6 @@
+// Copyright 2015 victorsamuelmd. All rights reserved.
+// Use of this source code is governed by GNU GPLv3
+// license
 package hello
 
 import (
@@ -20,6 +23,8 @@ func init() {
 	r.HandleFunc("/paciente/{id}", updatePatient).Methods("PUT")
 	r.HandleFunc("/paciente/{id}", deletePatient).Methods("DELETE")
 	r.HandleFunc("/consulta", createHistoriaConsulta).Methods("POST")
+	r.HandleFunc("/key", showKey)
+	r.HandleFunc("/valid", validateToken).Methods("POST")
 	http.Handle("/", r)
 }
 

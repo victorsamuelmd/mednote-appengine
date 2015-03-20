@@ -1,2 +1,4 @@
 *.swp
 /static/js
+/static/node_modules
+/static/bower_components

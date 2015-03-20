@@ -13,10 +13,15 @@
 <div ng-app="mednote">
     <div ui-view></div>
     <div ui-view="some"></div>
+    <div ng-controller="AuthController as vm">
+        <button ng-click="vm.getToken()">Get Token</button>
+        <button ng-click="vm.verifyToken()">Verify</button>
+    </div>
 </div>
 <script src="/static/bower_components/angular/angular.min.js"></script>
 <script src="/static/app.js"></script>
 <script src="/static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="/static/bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
 <script src="/static/consultations/module.js"></script>
 <script src="/static/consultations/controller.js"></script>
 <script src="/static/patients/module.js"></script>

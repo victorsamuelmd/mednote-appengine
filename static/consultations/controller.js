@@ -16,11 +16,6 @@
             angular.extend(c, vm.data);
             c.$save();
         }
-
-/*        $scope.$watchCollection(function(){return patient.patient}, function (newv, old) {
-            vm.patient = newv;
-            vm.data.usuario = vm.patient.Identificacion;
-        });*/
     }
 
     ConsultationsController.$inject = ['patient', '$scope', '$resource'];
