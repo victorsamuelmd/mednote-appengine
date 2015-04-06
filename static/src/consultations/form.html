@@ -1,0 +1,28 @@
+{{ c.patient.Identificacion }} {{ c.patient.Nombres }} {{ c.patient.PrimerApellido }}
+    <button ng-click="c.create()">Create</button>
+    <form>
+        <textarea ng-model="c.data.motivo_consulta"
+            name="motivo_consulta"
+            placeholder="Motivo de Consulta"></textarea>
+
+        <textarea ng-model="c.data.enfermedad_actual"
+            name="enfermedad_actual"
+            placeholder="Enfermedad Actual"></textarea>
+
+        <textarea ng-model="c.data.revision_sistemas"
+            name="revision_sistemas"
+            placeholder="Revisión por Sistemas"></textarea>
+
+        <textarea ng-model="c.data.examen_fisico"
+            name="examen_físico"
+            placeholder="Exámen Físico"></textarea>
+
+        <textarea ng-model="c.data.analisis"
+            name="analisis"
+            placeholder="Análisis"></textarea>
+
+        <textarea ng-model="c.data.conducta"
+            name="conducta"
+            placeholder="Conducta"></textarea>
+    </form>
+    {{ c.data.user.username }} {{ c.data.user.auth_level }}

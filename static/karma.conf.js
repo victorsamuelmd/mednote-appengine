@@ -15,15 +15,17 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'bower_components/Faker/build/build/faker.min.js',
       'bower_components/angular/angular.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-      'app.js',
-      'patients/module.js',
-      'consultations/module.js',
-      'consultations/!(module).js',
+      'bower_components/angular-jwt/dist/angular-jwt.min.js',
+      'bower_components/a0-angular-storage/dist/angular-storage.min.js',
       'bower_components/angular-resource/angular-resource.min.js',
-      'patients/!(module).js',
+      'app.js',
+      'src/**/module.js',
+      'src/**/*.js',
+      'src/**/*.spec.js'
     ],
 
 

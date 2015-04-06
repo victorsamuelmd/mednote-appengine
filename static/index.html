@@ -4,29 +4,57 @@
 <head>
 <meta charset="UTF-8">
 <title>MedNote</title>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" type="text/css"/>
-<link rel="stylesheet" href="/static/css/styles.css"/>
+<!-- build:css css/style.css -->
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/foundation/css/foundation.css" />
+<!-- endbower -->
+<link rel="stylesheet" href="css/styles.css"/>
+<!-- endbuild -->
 </head>
 
 <body>
-
 <div ng-app="mednote">
-    <div ui-view></div>
-    <div ui-view="some"></div>
-    <div ng-controller="AuthController as vm">
-        <button ng-click="vm.getToken()">Get Token</button>
-        <button ng-click="vm.verifyToken()">Verify</button>
+    <nav class="top-bar"></nav>
+    <div class="row">
+        <div class="small-12 medium-4 large-3 columns">
+            <ul class="side-nav">
+                <li><a href="#/login">Login</a></li>
+                <li><a href="#/patient/create">Pacientes</a></li>
+                <li><a href="#/consultation">Consulta</a></li>
+            </ul>
+        </div>
+        <div class="small-12 medium-8 large-9 columns">
+            <div ui-view></div>
+        </div>
     </div>
 </div>
-<script src="/static/bower_components/angular/angular.min.js"></script>
-<script src="/static/app.js"></script>
-<script src="/static/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="/static/bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
-<script src="/static/consultations/module.js"></script>
-<script src="/static/consultations/controller.js"></script>
-<script src="/static/patients/module.js"></script>
-<script src="/static/patients/service.js"></script>
-<script src="/static/patients/controller.js"></script>
-<script src="/static/bower_components/angular-resource/angular-resource.min.js"></script>
+<div ui-view></div>
+<!-- build:js js/lib.js -->
+<!-- bower:js -->
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+<script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+<script src="bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+<script src="bower_components/foundation/js/foundation.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<!-- build:js js/app.js -->
+<!-- inject:js -->
+<script src="app.js"></script>
+<script src="/src/auth/module.js"></script>
+<script src="/src/consultations/module.js"></script>
+<script src="/src/patients/module.js"></script>
+<script src="/src/auth/controller.js"></script>
+<script src="/src/consultations/controller.js"></script>
+<script src="/src/patients/controller.js"></script>
+<script src="/src/patients/service.js"></script>
+<!-- endinject -->
+<!-- endbuild -->
 </body>
 </html>

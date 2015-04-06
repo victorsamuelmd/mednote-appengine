@@ -1,0 +1,16 @@
+application: decoproyecciones
+version: 2
+runtime: go
+api_version: go1
+
+handlers:
+- url: /src
+  static_dir: static/src
+
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
+
+- url: /.*
+  script: _go_app
+

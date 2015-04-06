@@ -18,13 +18,13 @@ import (
 func init() {
 	r := mux.NewRouter()
 	r.HandleFunc("/paciente", getPatientsList).Methods("GET")
-	r.HandleFunc("/paciente", createPatient).Methods("POST")
+	r.Handle("/paciente", protect(http.HandlerFunc(createPatient))).Methods("POST")
 	r.HandleFunc("/paciente/{id}", getPatient).Methods("GET")
 	r.HandleFunc("/paciente/{id}", updatePatient).Methods("PUT")
 	r.HandleFunc("/paciente/{id}", deletePatient).Methods("DELETE")
 	r.HandleFunc("/consulta", createHistoriaConsulta).Methods("POST")
-	r.HandleFunc("/key", showKey)
-	r.HandleFunc("/valid", validateToken).Methods("POST")
+	r.HandleFunc("/login", login).Methods("POST")
+	r.HandleFunc("/logup", logup).Methods("POST")
 	http.Handle("/", r)
 }
 

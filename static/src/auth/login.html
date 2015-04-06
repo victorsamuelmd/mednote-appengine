@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="small-8 medium-4 large-4 small-centered columns">
+<h3>Login</h3>
+<form name="loginForm">
+    <input ng-model="vm.username" 
+        name="username"
+        ng-required="true"
+        ng-minlength="6"
+        ng-maxlength="40"
+        type="text"/>
+    <input ng-model="vm.password"
+        name="password"
+        ng-required="true"
+        ng-minlength="6"
+        ng-maxlength="50"
+        type="password"/>
+    <span class="bg-danger text-danger">{{vm.error}}</span>
+    <span ng-show="vm.waiting">Waiting... 
+        <img src="https://secure.hulu.com/images/loading-animated-circle-32x32.gif?1148796774">
+    </span>
+</form>
+
+<button ng-click="vm.login()" ng-hide="vm.waiting"
+    ng-disabled="loginForm.$invalid">Sign in</button>
+<button ng-click="vm.logup()" ng-disabled="loginForm.$invalid">logup</button>
+</div>
+</div>
